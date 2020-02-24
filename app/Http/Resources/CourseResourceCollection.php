@@ -6,6 +6,13 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CourseResourceCollection extends ResourceCollection
 {
+    protected $user;
+
+    public function getUser($value)
+    {
+        $this->user = $value;
+        return $this;
+    }
     /**
      * Transform the resource collection into an array.
      *
@@ -14,9 +21,8 @@ class CourseResourceCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
-        return [
-            "id" => $this->id,
-        ];
+        return $this->collection->map(function (CourseResource $resource) use ($request) {
+            return $resource->getUser($this->user)->toArray($request);
+        })->all();
     }
 }

@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use JWTAuth;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Requests\RegistrationFormRequest;
 use App\User;
 
 class AuthController extends Controller
 {
+
     public $loginAfterSignUp = true;
+
 
     public function login(Request $request)
     {

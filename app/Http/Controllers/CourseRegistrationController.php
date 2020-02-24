@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Http\Resources\CourseResource;
-use App\Http\Resources\CourseResourceCollection;
 use JWTAuth;
 use Illuminate\Http\Request;
 
@@ -14,6 +13,7 @@ class CourseRegistrationController extends Controller
 
     public function __construct()
     {
+        // get the current logged in user
         $this->user = JWTAuth::parseToken()->authenticate();
     }
 
@@ -39,15 +39,6 @@ class CourseRegistrationController extends Controller
 
     public function all_courses()
     {
-        // $permissions = Course::select('id', 'title')->with('users')->get()->toArray();
-
-
-        // $mappedPermissions = array_map(function ($permission) { 
-        //     $permission['user_id'] = data_get($permission, '0.pivot.user_id');
-
-        //     return $permission; 
-        // }, $permissions);
-
-        return CourseResource::collection(Course::all());
+        return  CourseResource::collection(Course::all())->getUser($this->user);
     }
 }
