@@ -25,3 +25,4 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('all_courses', 'CourseRegistrationController@all_courses');
 });
 Route::get('export', 'CourseController@export');
+Route::get('store', 'CourseController@store');
