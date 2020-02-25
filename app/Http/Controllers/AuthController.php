@@ -9,10 +9,16 @@ use App\User;
 
 class AuthController extends Controller
 {
-
+    /**
+     * @var bool
+     */
     public $loginAfterSignUp = true;
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
         $input = $request->only('email', 'password');
@@ -31,6 +37,10 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @param RegistrationFormRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register(RegistrationFormRequest $request)
     {
         $user = new User();

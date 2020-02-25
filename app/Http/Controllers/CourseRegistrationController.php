@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class CourseRegistrationController extends Controller
 {
+    /**
+     * Holds the current logged in user
+     * @var User
+     */
     protected $user;
 
     public function __construct()
@@ -17,6 +21,13 @@ class CourseRegistrationController extends Controller
         $this->user = JWTAuth::parseToken()->authenticate();
     }
 
+    /**
+     * Store a newly created resource in storage.
+     * @authenticated
+     * @throws \Illuminate\Validation\ValidationException
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register_course(Request $request)
     {
         $request->validate([
@@ -37,6 +48,11 @@ class CourseRegistrationController extends Controller
             ], 500);
     }
 
+    /**
+     * Display a listing of the resource.
+     * @authenticated
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function all_courses()
     {
         return  CourseResource::collection(Course::all())->getUser($this->user);

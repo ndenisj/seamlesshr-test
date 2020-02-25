@@ -9,6 +9,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CourseController extends Controller
 {
+    /**
+     * Store a newly created resource in storage.
+     * @return \Illuminate\Http\Response
+     */
     public function store()
     {
         CreateCoursesJob::dispatch()->delay(now()->addSeconds(5));

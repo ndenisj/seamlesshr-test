@@ -25,15 +25,15 @@ class CourseResource extends JsonResource
      */
     public function toArray($request)
     {
-
+        $query = DB::table('user_courses')->where([['course_id', '=', $this->id], ['user_id', '=', $this->user->id]]);
         return [
             "id" => $this->id,
             "title" => $this->title,
             "tutor" => $this->tutor,
             "duration" => $this->duration,
             "text" => $this->text,
-            "reg_date" => $this->when(DB::table('user_courses')->where([['course_id', '=', $this->id], ['user_id', '=', $this->user->id]])->exists(), function () {
-                return DB::table('user_courses')->where([['course_id', '=', $this->id], ['user_id', '=', $this->user->id]])->pluck('registration_date')->first();
+            "registration_date" => $this->when($query->exists(), function () use ($query) {
+                return $query->pluck('registration_date')->first();
             }),
         ];
     }
